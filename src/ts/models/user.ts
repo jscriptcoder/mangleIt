@@ -1,4 +1,3 @@
-
 interface WordScore {
     word: string;
     score: number;
