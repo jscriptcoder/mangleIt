@@ -22,4 +22,18 @@ export default class User {
         this.result.push({word, score});
     }
     
+    public get totalScore(): number {
+        let total: number = 0;
+        
+        for (let wordScore of this.result) {
+            total += wordScore.score;
+        }
+        
+        return total;
+    }
+    
+    public setFromBackend() {
+        //todo
+    }
+    
 }
