@@ -5,9 +5,7 @@
 </head>
 <body>
     
-    <mangle-it></mangle-it>
-    
-    
+    <div ui-view></div>
     
     <!-- Promise polyfill -->
     <script src="bower_components/es6-promise/promise.min.js"></script>
@@ -17,7 +15,13 @@
     
     <!-- Firebase as backend -->
     <script src="bower_components/firebase/firebase.js"></script>
+    
+    <!-- Angular framework -->
+    <script src="bower_components/angular/angular.min.js"></script>
 
+    <!-- UI-Router -->
+    <script src="bower_components/ui-router/release/angular-ui-router.min.js"></script>
+    
     <script>
         System.config({
             baseURL: './build/js/',
