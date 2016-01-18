@@ -18,6 +18,7 @@
   "homepage": "https://github.com/jscriptcoder/mangleIt",
   "devDependencies": {
     "gulp": "^3.9.0",
+    "gulp-angular-templatecache": "^1.8.0",
     "gulp-less": "^3.0.5",
     "gulp-typescript": "^2.10.0",
     "systemjs": "^0.19.16"

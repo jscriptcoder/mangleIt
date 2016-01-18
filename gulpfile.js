@@ -1,6 +1,7 @@
 var gulp = require('gulp'),
     less = require('gulp-less'),
-    tsc = require('gulp-typescript');
+    tsc = require('gulp-typescript'),
+    templateCache = require('gulp-angular-templatecache');
 
 
 gulp.task('less', function () {
@@ -18,9 +19,11 @@ gulp.task('tsc', function () {
         .pipe(gulp.dest('build/js/'))
 });
 
-gulp.task('compile', ['less', 'tsc']);
+gulp.task('tmplcache', function () {
+    return gulp.src('src/ts/components/**/*.html')
+        .pipe(templateCache())
+        .pipe(gulp.dest('build/js/'));
+})
 
-gulp.task('default', function () {
-    //gulp.watch('src/less/**/*.less', ['less']);
-    //gulp.watch('src/ts/**/*.ts', ['tsc']);
-});
+gulp.task('compile', ['less', 'tsc']);
+gulp.task('default', ['compile', 'tmplcache']);
