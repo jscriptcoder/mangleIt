@@ -1,0 +1,25 @@
+{
+  "name": "mangleIt",
+  "version": "1.0.0",
+  "description": "Just because I'm bored :-P",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jscriptcoder/mangleIt.git"
+  },
+  "author": "Francisco Ramos <jscriptcoder@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jscriptcoder/mangleIt/issues"
+  },
+  "homepage": "https://github.com/jscriptcoder/mangleIt",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-less": "^3.0.5",
+    "gulp-typescript": "^2.10.0",
+    "systemjs": "^0.19.16"
+  }
+}

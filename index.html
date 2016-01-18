@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>..:: MangleIt ::..</title>
+</head>
+<body>
+    
+    <mangle-it></mangle-it>
+    
+    
+    
+    <!-- Promise polyfill -->
+    <script src="bower_components/es6-promise/promise.min.js"></script>
+    
+    <!-- ES6 module system polyfill -->
+    <script src="node_modules/systemjs/dist/system.js"></script>
+
+    <script>
+        System.config({
+            baseURL: './build/js/',
+            defaultJSExtensions: true
+        });
+        System.import('index');
+    </script>
+    
+</body>
+</html>

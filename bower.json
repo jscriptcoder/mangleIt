@@ -1,0 +1,22 @@
+{
+  "name": "mangleIt",
+  "version": "1.0.0",
+  "homepage": "https://github.com/jscriptcoder/mangleIt",
+  "authors": [
+    "Francisco Ramos <jscriptcoder@gmail.com>"
+  ],
+  "description": "Just because I'm bored :-P",
+  "main": "index.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "es6-promise": "~3.0.2",
+    "bootstrap": "~3.3.6"
+  }
+}
