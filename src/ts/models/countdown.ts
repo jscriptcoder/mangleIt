@@ -2,7 +2,7 @@
 
 /**
  * Very simple countdown with just a "start" method
- * We could improve it by adding "stop", "pause" and reset methods
+ * We could improve it by adding "stop", "pause" and "reset" methods
  * 
  * @requires Promise
  */
@@ -10,7 +10,7 @@ export default class Countdown {
     
     private _timeout: number;
     
-    constructor(timeout: number = 40) {
+    constructor(timeout: number = 60) {
         this._timeout = timeout;
     }
     
