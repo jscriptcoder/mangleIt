@@ -1,6 +1,7 @@
 interface WordScore {
     word: string;
     score: number;
+    time: number;
 }
 
 /**
@@ -17,8 +18,8 @@ export default class User {
         this.result = [];
     }
     
-    public addScore(word: string, score: number) {
-        this.result.push({word, score});
+    public addScore(word: string, score: number, time: number) {
+        this.result.push({word, score, time});
     }
     
     public get totalScore(): number {
@@ -26,6 +27,16 @@ export default class User {
         
         for (let wordScore of this.result) {
             total += wordScore.score;
+        }
+        
+        return total;
+    }
+    
+    public get totalTime(): number {
+        let total: number = 0;
+        
+        for (let wordScore of this.result) {
+            total += wordScore.time;
         }
         
         return total;
