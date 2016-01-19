@@ -19,6 +19,7 @@ export default class MangleIt {
     private _words: string[] = [];
     private _wordsPromise: Promise<string[]>;
     private _idxCurrentWord: number = 0;
+    private _currMangledWord: string[];
     
     constructor(countdown: Countdown, firebase: Firebase, user?: User) {
         this._countdown = countdown;
@@ -62,11 +63,35 @@ export default class MangleIt {
             const nextWord = this._words[this._idxCurrentWord++];
             const mangledWord = this.mangleWord(nextWord);
             
-            return [mangledWord, nextWord]; // returns the mangled and original one
+            this.user.addScore({
+                word: nextWord,
+                points: Math.floor(Math.pow(1.95, nextWord.length/3)), // as per spec: floor(1.95^(n/3))
+                score: 0,
+                neg: 0,
+                time: 0
+            });
+            
+            return this._currMangledWord = [mangledWord, nextWord]; // returns the mangled and original one
             
         } else {
             // we went through the whole list. TODO
         }
+    }
+    
+    public get mangledWord(): string {
+        return this._currMangledWord ? this._currMangledWord[0] : ''; // returns the mangled one
+    }
+
+    public get unmangledWord(): string {
+        return this._currMangledWord ? this._currMangledWord[1] : ''; // returns the unmangled one
+    }
+    
+    public addPointsToParticipant() {
+        this.user.addPoints('last');
+    }
+    
+    public substractOnePointFromParticipant() {
+        this.user.decreaseOnePoint('last');
     }
 
     private shuffleWords(words: string[]) {

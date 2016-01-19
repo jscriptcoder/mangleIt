@@ -3,19 +3,32 @@ import Countdown from '../../models/countdown';
 import User from '../../models/user';
 import MangleIt from '../../models/mangle-it';
 
+const ENTER: number = 13;
+const BACKSPACE: number = 8;
+
 export default class MangleItController {
     
-    protected static $inject = ['$scope', 'countdown', 'firebase', 'user'];
+    protected static $inject = ['$scope', '$timeout', 'countdown', 'firebase', 'user'];
     
     public enterNameForm: ng.IFormController;
     public model: MangleIt;
     
-    private $scope: ng.IScope;
-    private currMangledWord: string[];
+    public enteredWord: string = '';
+    public wrongWord: boolean = false;
     
-    constructor($scope: ng.IScope, countdown: Countdown, firebase: Firebase, user: User) {
+    private $scope: ng.IScope;
+    private $timeout: ng.ITimeoutService;
+    
+    constructor($scope: ng.IScope, $timeout: ng.ITimeoutService, countdown: Countdown, firebase: Firebase, user: User) {
         this.$scope = $scope;
+        this.$timeout = $timeout;
+        
         this.model = MangleIt.factory(countdown, firebase, user);
+        
+        // let's install a watcher to updatate the current score
+        this.$scope.$watch(() => this.enteredWord, (val) => {
+            
+        });
     }
     
     public get isGameOn(): boolean {
@@ -37,18 +50,40 @@ export default class MangleItController {
         }
     }
     
-    public get mangledWord(): string {
-        return this.currMangledWord ? this.currMangledWord[0] : ''; // returns the mangled one
-    }
-    
-    private getNextMangledWord() {
-        this.currMangledWord = this.model.getNextMangledWord();
+    public onKeydown($event: KeyboardEvent) {
+        switch ($event.keyCode) {
+            case ENTER:
+                
+                if (this.enteredWord === this.model.unmangledWord) {
+                    this.scoreAndMoveToNext();
+                } else {
+                    this.showWrongWordError(5); // will show error message for 5 seconds
+                }
+                
+                break;
+            case BACKSPACE:
+                if (this.enteredWord.length) {
+                    this.model.substractOnePointFromParticipant();
+                }
+                break;
+        }
     }
     
     private onWords() {
         this.$scope.$apply(() => {
-            if (!this.mangledWord) this.getNextMangledWord();
+            if (!this.model.mangledWord) this.model.getNextMangledWord();
         });
+    }
+    
+    private showWrongWordError(seconds: number) {
+        this.wrongWord = true;
+        this.$timeout(() => this.wrongWord = false, seconds * 1000);
+    }
+    
+    private scoreAndMoveToNext() {
+        this.model.addPointsToParticipant();
+        this.enteredWord = '';
+        this.model.getNextMangledWord();
     }
     
 }

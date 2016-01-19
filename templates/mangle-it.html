@@ -39,18 +39,21 @@
             <h2>Total score: <strong>{{mangleItCtrl.model.totalScoreParticipant}}</strong></h2>
         </div>
         
-        <h4 ng-if="!mangleItCtrl.mangledWord"><em>Loading words...</em></h4>
+        <h4 ng-if="!mangleItCtrl.model.mangledWord"><em>Loading words...</em></h4>
         
-        <form name="mangleItCtrl.enterWordForm" class="form-inline" ng-show="mangleItCtrl.mangledWord">
+        <form name="mangleItCtrl.enterWordForm" class="form-inline" ng-show="mangleItCtrl.model.mangledWord">
             <div class="form-group">
                 
-                <label for="word">{{mangleItCtrl.mangledWord}} &rarr; </label>
+                <label for="word">{{mangleItCtrl.model.mangledWord}} &rarr; </label>
 
                 <input type="text" 
                        class="form-control" 
                        id="word" 
-                       placeholder="Unmangle..." 
-                       required="required">
+                       placeholder="Unmangle... {{mangleItCtrl.model.unmangledWord}}"
+                       ng-keydown="mangleItCtrl.onKeydown($event)"
+                       ng-model="mangleItCtrl.enteredWord">
+                
+                <span class="error-msg" ng-show="mangleItCtrl.wrongWord">Wrong solution!. Try again</span>
             </div>
         </form>
         
