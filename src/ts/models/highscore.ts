@@ -7,8 +7,12 @@ export default class Highscore {
     
     private _users: User[];
     
-    constructor() {
-        this._users = [];
+    constructor(users: User[] = []) {
+        this._users = users;
+    }
+    
+    public addUsers(users: User[]) {
+        this._users = users;
     }
     
     public addUser(user: User) {

@@ -13,7 +13,7 @@ export default class User {
     public name: string;
     public result: WordScore[];
     
-    constructor(name: string) {
+    constructor(name: string = '') {
         this.name = name;
         this.result = [];
     }

@@ -1,6 +1,6 @@
 import HighscoreController from './highscore-controller';
 
-export default class HighscoreDirective {
+export default class HighscoreDirective implements ng.IDirective {
     
     public static factory(): HighscoreDirective {
         return new HighscoreDirective();
@@ -10,7 +10,7 @@ export default class HighscoreDirective {
     public controllerAs = 'highscoreCtrl';
     public replace = true;
     public restrict = 'E';
-    public templateUrl = 'templates/highscore/highscore.html';
+    public templateUrl = 'templates/highscore.html';
     public link = () => {}
     
 }

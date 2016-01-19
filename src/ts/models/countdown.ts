@@ -1,5 +1,3 @@
-/// <reference path="../typings/es6-promise/es6-promise.d.ts" />
-
 /**
  * Very simple countdown with just a "start" method
  * We could improve it by adding "stop", "pause" and "reset" methods
@@ -8,7 +6,7 @@
  */
 export default class Countdown {
     
-    private _timeout: number;
+    private _timeout: number; // in seconds
     
     constructor(timeout: number = 60) {
         this._timeout = timeout;
@@ -16,7 +14,7 @@ export default class Countdown {
     
     public start(): Promise<any> {
         return new Promise((resolve: Function, reject: Function) => {
-            setTimeout(resolve, this._timeout);
+            setTimeout(resolve, this._timeout * 1000);
         });
     }
 }

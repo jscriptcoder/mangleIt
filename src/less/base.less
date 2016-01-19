@@ -2,9 +2,12 @@ html, body { height: 100%; }
 
 header {
     padding: 20px 10px;
-    background-color: lightblue;
     
     h1 { color: darkblue; }
+}
+
+main {
+    padding: 50px;
 }
 
 footer {
@@ -12,7 +15,16 @@ footer {
     bottom: 0;
     width: 100%;
     padding: 10px 5px;
-    background-color: darkblue;
-    color: white;
-    font-weight: bold;
+    
+    a {
+        color: white;
+        text-decoration: none;
+        
+        &:hover,
+        &:focus {
+            color: white;
+            text-decoration: none;
+        }
+    }
+    
 }
