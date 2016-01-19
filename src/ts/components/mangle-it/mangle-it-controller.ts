@@ -5,13 +5,16 @@ import MangleIt from '../../models/mangle-it';
 
 export default class MangleItController {
     
-    protected static $inject = ['countdown', 'firebase', 'user'];
+    protected static $inject = ['$scope', 'countdown', 'firebase', 'user'];
     
     public enterNameForm: ng.IFormController;
-    
     public model: MangleIt;
     
-    constructor(countdown: Countdown, firebase: Firebase, user: User) {
+    private $scope: ng.IScope;
+    private currMangledWord: string[];
+    
+    constructor($scope: ng.IScope, countdown: Countdown, firebase: Firebase, user: User) {
+        this.$scope = $scope;
         this.model = MangleIt.factory(countdown, firebase, user);
     }
     
@@ -23,14 +26,29 @@ export default class MangleItController {
         return !this.enterNameForm.$pristine && this.enterNameForm.$invalid;
     }
     
-    public noName(): boolean {
+    public pristineInput(): boolean {
         return this.enterNameForm.$pristine;
     }
     
     public beginClick() {
-        if (!this.noName() && !this.invalidUsername()) {
+        if (!this.pristineInput() && !this.invalidUsername()) {
             this.model.gameOn = true;
+            this.model.onWords().then(this.onWords.bind(this));
         }
+    }
+    
+    public get mangledWord(): string {
+        return this.currMangledWord ? this.currMangledWord[0] : ''; // returns the mangled one
+    }
+    
+    private getNextMangledWord() {
+        this.currMangledWord = this.model.getNextMangledWord();
+    }
+    
+    private onWords() {
+        this.$scope.$apply(() => {
+            if (!this.mangledWord) this.getNextMangledWord();
+        });
     }
     
 }
