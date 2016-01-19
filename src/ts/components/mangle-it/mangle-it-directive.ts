@@ -11,6 +11,5 @@ export default class MangleItDirective implements ng.IDirective {
     public replace = true;
     public restrict = 'E';
     public templateUrl = 'templates/mangle-it.html';
-    public link = () => {}
     
 }

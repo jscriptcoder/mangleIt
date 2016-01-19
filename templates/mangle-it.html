@@ -27,7 +27,7 @@
             </div>
             <button class="btn btn-primary" 
                     ng-class="{disabled: mangleItCtrl.pristineInput() || mangleItCtrl.invalidUsername()}"
-                    ng-click="mangleItCtrl.beginClick()">Begin</button>
+                    ng-click="mangleItCtrl.startClick()">Start</button>
         </form>
 
     </div>
@@ -35,8 +35,23 @@
     <div class="game-on" ng-if="mangleItCtrl.model.isGameOn">
         
         <div class="well">
-            <h3><strong><em>{{mangleItCtrl.model.user.name}}</em></strong> is playing</h3>
-            <h2>Total score: <strong>{{mangleItCtrl.model.totalScoreParticipant}}</strong></h2>
+            
+            <div class="row">
+                
+                <div class="col-md-8">
+                    <h3><strong><em>{{mangleItCtrl.model.user.name}}</em></strong> is playing</h3>
+                    <h2>Total score: <strong>{{mangleItCtrl.model.totalScoreParticipant}}</strong></h2>        
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="pull-right">
+                        <countdown timeout="{{mangleItCtrl.model.timeout}}" on-end="mangleItCtrl.onCountdownEnd()"></countdown>
+                    </div>
+                </div>
+                
+            </div>
+            
+            
         </div>
         
         <h4 ng-if="!mangleItCtrl.model.mangledWord"><em>Loading words...</em></h4>

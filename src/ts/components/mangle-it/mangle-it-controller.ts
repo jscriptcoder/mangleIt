@@ -43,7 +43,7 @@ export default class MangleItController {
         return this.enterNameForm.$pristine;
     }
     
-    public beginClick() {
+    public startClick() {
         if (!this.pristineInput() && !this.invalidUsername()) {
             this.model.gameOn = true;
             this.model.onWords().then(this.onWords.bind(this));
@@ -71,7 +71,7 @@ export default class MangleItController {
     
     private onWords() {
         this.$scope.$apply(() => {
-            if (!this.model.mangledWord) this.model.getNextMangledWord();
+            if (!this.model.mangledWord) this.model.start();
         });
     }
     

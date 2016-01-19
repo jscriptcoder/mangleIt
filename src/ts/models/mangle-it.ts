@@ -41,6 +41,13 @@ export default class MangleIt {
         this._gameOn = isOn;
     }
     
+    public start() {
+        if (this._gameOn) {
+            this._countdown.start().then(this.onCountdownEnd.bind(this));
+            this.getNextMangledWord();
+        }
+    }
+    
     public get isGameOn(): boolean {
         return this._gameOn;
     }
@@ -58,6 +65,8 @@ export default class MangleIt {
     }
     
     public getNextMangledWord(): string[] {
+        if (!this._countdown.isOn) return; // we don't 
+        
         if (this._idxCurrentWord < this._words.length) {
             
             const nextWord = this._words[this._idxCurrentWord++];
@@ -92,6 +101,10 @@ export default class MangleIt {
     
     public substractOnePointFromParticipant() {
         this.user.decreaseOnePoint('last');
+    }
+    
+    public get timeout(): number {
+        return this._countdown.timeout;
     }
 
     private shuffleWords(words: string[]) {
@@ -138,6 +151,12 @@ export default class MangleIt {
             });
 
         });
+    }
+    
+    private onCountdownEnd() {
+        // resets values
+        this._idxCurrentWord = 0;
+        this._currMangledWord = [];
     }
     
 }

@@ -11,6 +11,5 @@ export default class HighscoreDirective implements ng.IDirective {
     public replace = true;
     public restrict = 'E';
     public templateUrl = 'templates/highscore.html';
-    public link = () => {}
     
 }

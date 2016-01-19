@@ -17,6 +17,7 @@ import CountdownProvider from './services/countdown-provider';
 
 // Directive components
 import MangleItDirective from './components/mangle-it/mangle-it-directive';
+import CountdownDirective from './components/countdown/countdown-directive';
 import HighscoreDirective from './components/highscore/highscore-directive';
 
 // creates application
@@ -35,6 +36,7 @@ mangleItApp
 
     // components
     .directive('mangleIt', MangleItDirective.factory)
+    .directive('countdown', CountdownDirective.factory)
     .directive('highscore', HighscoreDirective.factory)
 
     // configuration
