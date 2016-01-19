@@ -24,15 +24,18 @@ export default class MangleItController {
         this.$timeout = $timeout;
         
         this.model = MangleIt.factory(countdown, firebase, user);
-        
-        // let's install a watcher to updatate the current score
-        this.$scope.$watch(() => this.enteredWord, (val) => {
-            
-        });
     }
     
     public get isGameOn(): boolean {
         return this.model.isGameOn;
+    }
+    
+    public get isGameOver(): boolean {
+        return this.model.isGameOver;
+    }
+    
+    public get isLoadingWords(): boolean {
+        return this.isGameOn && !this.isGameOver && !this.model.mangledWord;
     }
     
     public invalidUsername(): boolean {
@@ -69,6 +72,15 @@ export default class MangleItController {
         }
     }
     
+    public submitClick() {
+        this.model.submitScore();
+        // todo: route to highscore
+    }
+    
+    public onCountdownEnd() {
+        this.$scope.$apply();
+    }
+    
     private onWords() {
         this.$scope.$apply(() => {
             if (!this.model.mangledWord) this.model.start();
@@ -85,5 +97,6 @@ export default class MangleItController {
         this.enteredWord = '';
         this.model.getNextMangledWord();
     }
+    
     
 }

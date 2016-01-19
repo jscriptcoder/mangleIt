@@ -16,6 +16,7 @@ export default class MangleIt {
     private _firebase: Firebase;
     private _user: User;
     private _gameOn: boolean = false;
+    private _gameOver: boolean = false;
     private _words: string[] = [];
     private _wordsPromise: Promise<string[]>;
     private _idxCurrentWord: number = 0;
@@ -41,8 +42,12 @@ export default class MangleIt {
         this._gameOn = isOn;
     }
     
+    public set gameOver(isOver: boolean) {
+        this._gameOver = isOver;
+    }
+    
     public start() {
-        if (this._gameOn) {
+        if (this._gameOn && !this._gameOver) {
             this._countdown.start().then(this.onCountdownEnd.bind(this));
             this.getNextMangledWord();
         }
@@ -50,6 +55,10 @@ export default class MangleIt {
     
     public get isGameOn(): boolean {
         return this._gameOn;
+    }
+    
+    public get isGameOver(): boolean {
+        return this._gameOver;
     }
     
     public onWords(): Promise<string[]> {
@@ -65,7 +74,9 @@ export default class MangleIt {
     }
     
     public getNextMangledWord(): string[] {
-        if (!this._countdown.isOn) return; // we don't 
+        if (this._gameOver || 
+            !this._gameOn || 
+            !this._countdown.isOn) return; // we cannot play the game
         
         if (this._idxCurrentWord < this._words.length) {
             
@@ -83,7 +94,7 @@ export default class MangleIt {
             return this._currMangledWord = [mangledWord, nextWord]; // returns the mangled and original one
             
         } else {
-            // we went through the whole list. TODO
+            // todo: we went through the whole list. What happens now???
         }
     }
     
@@ -106,7 +117,26 @@ export default class MangleIt {
     public get timeout(): number {
         return this._countdown.timeout;
     }
+    
+    public submitScore() {
+        let usersRef = this._firebase.child('users');
 
+        return new Promise((resolve: Function, reject: Function) => {
+            let serializedUser: string = JSON.stringify(this._user);
+
+            console.log(serializedUser);
+            
+            usersRef.push(serializedUser, (error?: any) => {
+                if (error) {
+                    reject();
+                } else {
+                    resolve(this._words);
+                }
+            });
+
+        });
+    }
+    
     private shuffleWords(words: string[]) {
         let shuffleWords = [],
             wordIndex = 0;
@@ -157,6 +187,9 @@ export default class MangleIt {
         // resets values
         this._idxCurrentWord = 0;
         this._currMangledWord = [];
+        
+        // the game is over
+        this._gameOver = true;
     }
     
 }

@@ -10,6 +10,7 @@ export default class CountdownController {
     private $scope: CountdownDirectiveScope;
     private _timeout: number;
     private _onEnd: Function;
+    private _currTime: number = 0;
     private _digits: string[] = ['0', '0'];
     
     constructor($scope: CountdownDirectiveScope) {
@@ -24,17 +25,27 @@ export default class CountdownController {
         return this._digits;
     }
     
+    public getClassByTime(): string {
+        let percentage = this._currTime * 100 / this._timeout;
+        if (percentage <= 50) {
+            return 'ok';
+        } else if (percentage > 50 && percentage <= 90) {
+            return 'warning';
+        } else {
+            return 'danger';
+        }
+    }
+    
     private initTimer() {
-        let timer = 0;
         let interval = setInterval(() => {
             
-            if (timer === this._timeout) {
+            if (this._currTime === this._timeout) {
                 clearInterval(interval);
                 this._onEnd();
             } else {
                 this.$scope.$apply(() => {
-                    timer++;
-                    this._digits = this.makeDigitsFromNumber(timer);
+                    this._currTime++;
+                    this._digits = this.makeDigitsFromNumber(this._currTime);
                 });
             }
             

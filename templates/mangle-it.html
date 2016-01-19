@@ -1,5 +1,6 @@
 <div class="mangle-it-component">
     
+    <!-- Enter Name section -->
     <div class="enter-name" ng-if="!mangleItCtrl.model.isGameOn">
 
         <div class="well">
@@ -32,6 +33,7 @@
 
     </div>
 
+    <!-- Game On section -->
     <div class="game-on" ng-if="mangleItCtrl.model.isGameOn">
         
         <div class="well">
@@ -54,7 +56,7 @@
             
         </div>
         
-        <h4 ng-if="!mangleItCtrl.model.mangledWord"><em>Loading words...</em></h4>
+        <h4 ng-if="mangleItCtrl.isLoadingWords"><em>Loading words...</em></h4>
         
         <form name="mangleItCtrl.enterWordForm" class="form-inline" ng-show="mangleItCtrl.model.mangledWord">
             <div class="form-group">
@@ -72,6 +74,13 @@
             </div>
         </form>
         
+    </div>
+    
+    <!-- Game Over section -->
+    <div class="game-over" ng-if="mangleItCtrl.model.isGameOver">
+        <h2>Game Over</h2>
+        <p>Please, submit your score...</p>
+        <button type="button" class="btn btn-primary" ng-click="mangleItCtrl.submitClick()">Submit</button>
     </div>
     
 </div>
