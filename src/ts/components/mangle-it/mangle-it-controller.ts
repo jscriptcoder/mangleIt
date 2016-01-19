@@ -19,11 +19,17 @@ export default class MangleItController {
     private $scope: ng.IScope;
     private $timeout: ng.ITimeoutService;
     
-    constructor($scope: ng.IScope, $timeout: ng.ITimeoutService, countdown: Countdown, firebase: Firebase, user: User) {
+    constructor($scope: ng.IScope, 
+                $timeout: ng.ITimeoutService, 
+                countdown: Countdown, 
+                firebase: Firebase, 
+                user: User) {
+        
         this.$scope = $scope;
         this.$timeout = $timeout;
         
         this.model = MangleIt.factory(countdown, firebase, user);
+        
     }
     
     public get isGameOn(): boolean {
@@ -49,6 +55,8 @@ export default class MangleItController {
     public startClick() {
         if (!this.pristineInput() && !this.invalidUsername()) {
             this.model.gameOn = true;
+            
+            // subscribes to onWords event (we have words from backend)
             this.model.onWords().then(this.onWords.bind(this));
         }
     }
@@ -60,12 +68,13 @@ export default class MangleItController {
                 if (this.enteredWord === this.model.unmangledWord) {
                     this.scoreAndMoveToNext();
                 } else {
-                    this.showWrongWordError(5); // will show error message for 5 seconds
+                    this.showWrongWordError(2); // will show error message for 2 seconds
                 }
                 
                 break;
             case BACKSPACE:
                 if (this.enteredWord.length) {
+                    // oops, we remove one point
                     this.model.substractOnePointFromParticipant();
                 }
                 break;
@@ -83,6 +92,7 @@ export default class MangleItController {
     
     private onWords() {
         this.$scope.$apply(() => {
+            // if we have words we kick off the game
             if (!this.model.mangledWord) this.model.start();
         });
     }
@@ -97,6 +107,5 @@ export default class MangleItController {
         this.enteredWord = '';
         this.model.getNextMangledWord();
     }
-    
     
 }

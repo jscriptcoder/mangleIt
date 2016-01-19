@@ -1,8 +1,6 @@
 /**
  * Very simple countdown with just a "start" method
  * We could improve it by adding "stop", "pause" and "reset" methods
- * 
- * @requires Promise
  */
 export default class Countdown {
     

@@ -8,6 +8,7 @@ export default class CountdownController {
     protected static $inject = ['$scope'];
     
     private $scope: CountdownDirectiveScope;
+    
     private _timeout: number;
     private _onEnd: Function;
     private _currTime: number = 0;
@@ -15,6 +16,7 @@ export default class CountdownController {
     
     constructor($scope: CountdownDirectiveScope) {
         this.$scope = $scope;
+        
         this._timeout = parseInt($scope.timeout, 10);
         this._onEnd = $scope.onEnd || angular.noop;
 
@@ -25,6 +27,12 @@ export default class CountdownController {
         return this._digits;
     }
     
+    /**
+     * Will change the color of the clock depending according to the following
+     *   up to 50% ==> ok
+     *   50% - 90% ==> warning
+     *   +90% ==> danger
+     */
     public getClassByTime(): string {
         let percentage = this._currTime * 100 / this._timeout;
         if (percentage <= 50) {
@@ -43,6 +51,7 @@ export default class CountdownController {
                 clearInterval(interval);
                 this._onEnd();
             } else {
+                // next tick
                 this.$scope.$apply(() => {
                     this._currTime++;
                     this._digits = this.makeDigitsFromNumber(this._currTime);
@@ -52,6 +61,9 @@ export default class CountdownController {
         }, 1000);
     }
     
+    /**
+     * Turns x or xx into 'xx'
+     */
     private makeDigitsFromNumber(val: number): string[] {
         let strVal = (val <= 9 ? '0' : '') + `${val}`; // converts to string appending '0' if <= 9
         return strVal.split(''); // converts to string[]

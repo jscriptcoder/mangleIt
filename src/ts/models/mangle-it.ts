@@ -48,7 +48,10 @@ export default class MangleIt {
     
     public start() {
         if (this._gameOn && !this._gameOver) {
+            
+            // subscribes to the end of the countdown
             this._countdown.start().then(this.onCountdownEnd.bind(this));
+            
             this.getNextMangledWord();
         }
     }
@@ -73,6 +76,9 @@ export default class MangleIt {
         return this.user.totalScore;
     }
     
+    /**
+     * This method will bring the next word to the game
+     */
     public getNextMangledWord(): string[] {
         if (this._gameOver || 
             !this._gameOn || 
@@ -101,6 +107,10 @@ export default class MangleIt {
     public get mangledWord(): string {
         return this._currMangledWord ? this._currMangledWord[0] : ''; // returns the mangled one
     }
+    
+    public get hasMangledWord(): boolean {
+        return !!this.mangledWord;
+    }
 
     public get unmangledWord(): string {
         return this._currMangledWord ? this._currMangledWord[1] : ''; // returns the unmangled one
@@ -122,10 +132,10 @@ export default class MangleIt {
         let usersRef = this._firebase.child('users');
 
         return new Promise((resolve: Function, reject: Function) => {
+            console.log('Sending to backend:', this._user);
+            
             let serializedUser: string = JSON.stringify(this._user);
 
-            console.log(serializedUser);
-            
             usersRef.push(serializedUser, (error?: any) => {
                 if (error) {
                     reject();
@@ -137,6 +147,9 @@ export default class MangleIt {
         });
     }
     
+    /**
+     * Magic crappy shuffling algorithm
+     */
     private shuffleWords(words: string[]) {
         let shuffleWords = [],
             wordIndex = 0;
@@ -150,6 +163,9 @@ export default class MangleIt {
         return shuffleWords;
     }
     
+    /**
+     * More magic crap happnening in here
+     */
     private mangleWord(word: string): string {
         let mangledWord = '',
             charIndex = 0,
@@ -173,7 +189,9 @@ export default class MangleIt {
                 let val = dataSnapshot.val();
                 if (val) {
                     this._words = this.shuffleWords(val.split(','));
-                    console.log(this._words);
+        
+                    console.log('Words retrieved from backend:', this._words);
+        
                     resolve(this._words);
                 } else {
                     reject();

@@ -58,7 +58,7 @@
         
         <h4 ng-if="mangleItCtrl.isLoadingWords"><em>Loading words...</em></h4>
         
-        <form name="mangleItCtrl.enterWordForm" class="form-inline" ng-show="mangleItCtrl.model.mangledWord">
+        <form name="mangleItCtrl.enterWordForm" class="form-inline" ng-show="mangleItCtrl.model.hasMangledWord">
             <div class="form-group">
                 
                 <label for="word">{{mangleItCtrl.model.mangledWord}} &rarr; </label>

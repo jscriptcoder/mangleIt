@@ -32,7 +32,6 @@ mangleItApp
 
     // Services
     .value('user', new User())
-    .value('highscore', new Highscore())
 
     // components
     .directive('mangleIt', MangleItDirective.factory)
