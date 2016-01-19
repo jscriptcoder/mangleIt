@@ -42,7 +42,7 @@ export default class CountdownController {
     }
     
     private makeDigitsFromNumber(val: number): string[] {
-        let strVal = (val < 9 ? '0' : '') + `${val}`; // converts to string appending '0' if < 9
+        let strVal = (val <= 9 ? '0' : '') + `${val}`; // converts to string appending '0' if <= 9
         return strVal.split(''); // converts to string[]
     }
     
