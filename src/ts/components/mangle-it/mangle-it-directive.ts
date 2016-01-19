@@ -1,13 +1,16 @@
 import MangleItController from './mangle-it-controller';
 
-export default function MangleItFactory(): ng.IDirective {
+export default class MangleItDirective {
     
-    return {
-        controller: MangleItController,
-        controllerAs: 'mangleItCtrl',
-        replace: true,
-        restrict: 'E',
-        templateUrl: 'mangle-it.html',
-    };
+    public static factory(): MangleItDirective {
+        return new MangleItDirective();
+    }
+    
+    public controller = MangleItController;
+    public controllerAs = 'mangleItCtrl';
+    public replace = true;
+    public restrict = 'E';
+    public templateUrl = 'templates/mangle-it/mangle-it.html';
+    public link = () => {}
     
 }

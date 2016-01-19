@@ -2,10 +2,35 @@
 <html>
 <head>
     <title>..:: MangleIt ::..</title>
+    <link rel="stylesheet" href="build/css/main.css" />
 </head>
 <body>
     
-    <div ui-view></div>
+    <header>
+        
+        <h1>Mangle-It</h1>
+        
+        <ol class="breadcrumb">
+          <li><a href="#">Home</a></li>
+          <li><a href="#/highscore">Highscore</a></li>
+        </ol>
+        
+    </header>
+    
+    <main>
+        
+        <div ui-view></div>
+        
+    </main>
+    
+    <footer>
+        
+        <ul class="list-inline">
+            <li><a href="https://github.com/jscriptcoder/mangleIt" target="_blank">GitHub</a></li>
+            <li><a href="https://codio.com/jscriptcoder/mangleit" target="_blank">Codio.com</a></li>
+        </ul>
+        
+    </footer>
     
     <!-- Promise polyfill -->
     <script src="bower_components/es6-promise/promise.min.js"></script>

@@ -16,6 +16,7 @@ export default class Highscore {
     }
     
     public get highscore(): User[] {
+        
         // let's sort it (I know, this is quite slow, and I could use a binary search
         // to insert into a sorted array in the "addUser" method, but... I'm lazy today :-P)
         return this._users.sort((user1: User, user2: User) => {
@@ -23,6 +24,7 @@ export default class Highscore {
             const scoreUser2 = user2.totalScore;
             return scoreUser1 === scoreUser2 ? 0 : (scoreUser1 < scoreUser2 ? 1 : -1);
         });
+        
     }
     
 }

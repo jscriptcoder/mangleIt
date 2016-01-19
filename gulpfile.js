@@ -19,11 +19,5 @@ gulp.task('tsc', function () {
         .pipe(gulp.dest('build/js/'))
 });
 
-gulp.task('tmplcache', function () {
-    return gulp.src('src/ts/components/**/*.html')
-        .pipe(templateCache())
-        .pipe(gulp.dest('build/js/'));
-})
-
 gulp.task('compile', ['less', 'tsc']);
-gulp.task('default', ['compile', 'tmplcache']);
+gulp.task('default', ['compile']);
