@@ -8,7 +8,14 @@ const BACKSPACE: number = 8;
 
 export default class MangleItController {
     
-    protected static $inject = ['$scope', '$timeout', 'countdown', 'firebase', 'user'];
+    protected static $inject = [
+        '$scope', 
+        '$timeout', 
+        '$state', 
+        'countdown', 
+        'firebase', 
+        'user'
+    ];
     
     public enterNameForm: ng.IFormController;
     public model: MangleIt;
@@ -18,15 +25,18 @@ export default class MangleItController {
     
     private $scope: ng.IScope;
     private $timeout: ng.ITimeoutService;
+    private $state: ng.ui.IStateService;
     
     constructor($scope: ng.IScope, 
                 $timeout: ng.ITimeoutService, 
+                $state: ng.ui.IStateService, 
                 countdown: Countdown, 
                 firebase: Firebase, 
                 user: User) {
         
         this.$scope = $scope;
         this.$timeout = $timeout;
+        this.$state = $state;
         
         this.model = MangleIt.factory(countdown, firebase, user);
         
@@ -83,7 +93,7 @@ export default class MangleItController {
     
     public submitClick() {
         this.model.submitScore();
-        // todo: route to highscore
+        this.$state.go('highscore');
     }
     
     public onCountdownEnd() {
