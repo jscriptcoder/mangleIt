@@ -11,8 +11,6 @@ export default class MangleItController {
     
     public model: MangleIt;
     
-    public 
-    
     constructor(countdown: Countdown, firebase: Firebase, user: User) {
         this.model = MangleIt.factory(countdown, firebase, user);
     }
