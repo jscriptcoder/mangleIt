@@ -16,8 +16,26 @@
             <tr ng-repeat="user in highscoreCtrl.model.highscore">
                 <td>{{$index}}</td>
                 <td>{{user.name}}</td>
-                <td>
-                    <div class="score">{{user.totalScore}}</div>
+                <td class="width-600">
+                    <div class="score" title="Click for details" ng-click="openDetails = !openDetails">{{user.totalScore}}</div>
+                    <table class="table table-bordered" ng-show="openDetails">
+                        <thead>
+                            <tr>
+                                <th>Word</th>
+                                <th>Max Points</th>
+                                <th>Final Score</th>
+                                <th>Time Spent</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="wordScore in user.result">
+                                <td>{{wordScore.word}}</td>
+                                <td>{{wordScore.points}}</td>
+                                <td>{{wordScore.score}}</td>
+                                <td>{{wordScore.time}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </td>
             </tr>
         </tbody>
