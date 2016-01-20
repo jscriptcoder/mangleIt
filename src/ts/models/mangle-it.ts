@@ -128,7 +128,7 @@ export default class MangleIt {
         return this._countdown.timeout;
     }
     
-    public submitScore() {
+    public submitScore(): Promise<User[]> {
         let usersRef = this._firebase.child('users');
 
         return new Promise((resolve: Function, reject: Function) => {
@@ -140,7 +140,7 @@ export default class MangleIt {
                 if (error) {
                     reject();
                 } else {
-                    resolve(this._words);
+                    resolve(this._user);
                 }
             });
 
